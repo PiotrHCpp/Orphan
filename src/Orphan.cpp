@@ -1,10 +1,10 @@
-#include "orphan.hpp"
+#include "Orphan.hpp"
 
 #include <string>
 #include <sstream>
 #include <queue>
 
-void removeFrontSpaces(std::string& line) {
+void Orphan::removeFrontSpaces(std::string& line) {
     if(!line.size()) return;
     auto endOfWhiteSpaces = line.find_first_not_of(' ', 0);
     if(endOfWhiteSpaces != std::string::npos) {
@@ -12,7 +12,7 @@ void removeFrontSpaces(std::string& line) {
     }
 }
 
-void removeSpacesOnTheEnd(std::string& line) {
+void Orphan::removeSpacesOnTheEnd(std::string& line) {
     if(!line.size()) return;
     auto whiteSpacesBegin = line.find_last_not_of(' ');
     if(whiteSpacesBegin != std::string::npos) {
@@ -20,7 +20,7 @@ void removeSpacesOnTheEnd(std::string& line) {
     }
 }
 
-void removeMultipleSpaces(std::string& line) {
+void Orphan::removeMultipleSpaces(std::string& line) {
     if(!line.size()) return;
     size_t doubleSpaceCharPosition = 0;
     size_t spaceCounter = 0;
@@ -34,7 +34,7 @@ void removeMultipleSpaces(std::string& line) {
     }
 }
 
-void insertHardspacesAfterOrphans(std::string& line) {
+void Orphan::insertHardspacesAfterOrphans(std::string& line) {
     if(!line.size()) return;
     std::stringstream lineStream(line);
     std::queue<std::string> orphans;
@@ -57,7 +57,7 @@ void insertHardspacesAfterOrphans(std::string& line) {
     }
 }
 
-void insertHardSpacesAfterSurnames(std::string& line) {
+void Orphan::insertHardSpacesAfterSurnames(std::string& line) {
     if(!line.size()) return;
     const size_t lineSize = line.size();
     size_t currentSpaceChar{0};

@@ -1,166 +1,173 @@
-#include "orphan.hpp"
+#include "Orphan.hpp"
 #include "gtest/gtest.h"
 
-TEST(removeFrontSpacesTests, doNotRemoveAnythingWhenEmptyString) {
+struct removeFrontSpacesTests : public ::testing::Test {
+    Orphan myOrphan{};
+};
+TEST_F(removeFrontSpacesTests, doNotRemoveAnythingWhenEmptyString) {
     std::string argument("");
     std::string expected(argument);
-    removeFrontSpaces(argument);
+    myOrphan.removeFrontSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeFrontSpacesTests, doNotRemoveAnythingWhenNoFrontSpaces) {
+TEST_F(removeFrontSpacesTests, doNotRemoveAnythingWhenNoFrontSpaces) {
     std::string argument("some text");
     std::string expected(argument);
-    removeFrontSpaces(argument);
+    myOrphan.removeFrontSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeFrontSpacesTests, canRemoveOneFrontSpace) {
+TEST_F(removeFrontSpacesTests, canRemoveOneFrontSpace) {
     std::string argument(1, ' ');
     argument.append("some text");
     std::string expected("some text");
-    removeFrontSpaces(argument);
+    myOrphan.removeFrontSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeFrontSpacesTests, canRemoveTwoFrontSpaces) {
+TEST_F(removeFrontSpacesTests, canRemoveTwoFrontSpaces) {
     std::string argument(2, ' ');
     argument.append("some text");
     std::string expected("some text");
-    removeFrontSpaces(argument);
+    myOrphan.removeFrontSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeFrontSpacesTests, canRemoveTenFrontSpaces) {
+TEST_F(removeFrontSpacesTests, canRemoveTenFrontSpaces) {
     std::string argument(10, ' ');
     argument.append("some text");
     std::string expected("some text");
-    removeFrontSpaces(argument);
+    myOrphan.removeFrontSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
 
-TEST(removeSpacesOnTheEndTests, doNotRemoveAnythingWhenEmptyString) {
+struct removeSpacesOnTheEndTests : public removeFrontSpacesTests {};
+TEST_F(removeSpacesOnTheEndTests, doNotRemoveAnythingWhenEmptyString) {
     std::string argument("");
     std::string expected(argument);
-    removeSpacesOnTheEnd(argument);
+    myOrphan.removeSpacesOnTheEnd(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeSpacesOnTheEndTests, doNotRemoveAnythingWhenNoEndlineSpaces) {
+TEST_F(removeSpacesOnTheEndTests, doNotRemoveAnythingWhenNoEndlineSpaces) {
     std::string argument("some text");
     std::string expected(argument);
-    removeSpacesOnTheEnd(argument);
+    myOrphan.removeSpacesOnTheEnd(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeSpacesOnTheEndTests, canRemoveASingleEndlineSpace) {
+TEST_F(removeSpacesOnTheEndTests, canRemoveASingleEndlineSpace) {
     std::string argument("some text ");
     std::string expected("some text");
-    removeSpacesOnTheEnd(argument);
+    myOrphan.removeSpacesOnTheEnd(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeSpacesOnTheEndTests, canRemoveTwoEndlineSpaces) {
+TEST_F(removeSpacesOnTheEndTests, canRemoveTwoEndlineSpaces) {
     std::string argument("some text");
     std::string expected(argument);
     std::string spaces(2, ' ');
     argument.append(spaces);
-    removeSpacesOnTheEnd(argument);
+    myOrphan.removeSpacesOnTheEnd(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeSpacesOnTheEndTests, canRemoveTenEndlineSpaces) {
+TEST_F(removeSpacesOnTheEndTests, canRemoveTenEndlineSpaces) {
     std::string argument("some text");
     std::string expected(argument);
     std::string spaces(10, ' ');
     argument.append(spaces);
-    removeSpacesOnTheEnd(argument);
+    myOrphan.removeSpacesOnTheEnd(argument);
     EXPECT_EQ(expected, argument);
 }
 
-TEST(removeMultipleSpacesTests, doNothingWhenEmptyStringPassedIn) {
+struct removeMultipleSpacesTests : public removeFrontSpacesTests {};
+TEST_F(removeMultipleSpacesTests, doNothingWhenEmptyStringPassedIn) {
     std::string argument("");
     std::string expected("");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixAFirstDoubleSpace) {
+TEST_F(removeMultipleSpacesTests, canFixAFirstDoubleSpace) {
     std::string argument("some  text");
     std::string expected("some text");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixAFirstDoubleSpaceOnTheFront) {
+TEST_F(removeMultipleSpacesTests, canFixAFirstDoubleSpaceOnTheFront) {
     std::string argument("  some text");
     std::string expected(" some text");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixADoubleSpaceOnTheEnd) {
+TEST_F(removeMultipleSpacesTests, canFixADoubleSpaceOnTheEnd) {
     std::string argument("some text  ");
     std::string expected("some text ");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixAFirstTripleSpace) {
+TEST_F(removeMultipleSpacesTests, canFixAFirstTripleSpace) {
     std::string argument("some   text");
     std::string expected("some text");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixAFirstTenSpaceGap) {
+TEST_F(removeMultipleSpacesTests, canFixAFirstTenSpaceGap) {
     std::string spaces(10, ' ');
     std::string argument("some");
     argument.append(spaces + "text");
     std::string expected("some text");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixTwoMulticharGaps) {
+TEST_F(removeMultipleSpacesTests, canFixTwoMulticharGaps) {
     std::string argument("some  weird   text passed  in");
     std::string expected("some weird text passed in");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(removeMultipleSpacesTests, canFixThreeMulticharGaps) {
+TEST_F(removeMultipleSpacesTests, canFixThreeMulticharGaps) {
     std::string argument("  some weird text   passed          in");
     std::string expected(" some weird text passed in");
-    removeMultipleSpaces(argument);
+    myOrphan.removeMultipleSpaces(argument);
     EXPECT_EQ(expected, argument);
 }
 
-TEST(insertHardspacesAfterOrphansTests, canHandleFirstOrphan) {
+struct insertHardspacesAfterOrphansTests : public removeFrontSpacesTests {};
+TEST_F(insertHardspacesAfterOrphansTests, canHandleFirstOrphan) {
     std::string argument("he gave me quite a weird text!");
     std::string expected("he gave me quite a~weird text!");
-    insertHardspacesAfterOrphans(argument);
+    myOrphan.insertHardspacesAfterOrphans(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(insertHardspacesAfterOrphansTests, canHandleTwoOrphans) {
+TEST_F(insertHardspacesAfterOrphansTests, canHandleTwoOrphans) {
     std::string argument("be c de f gie");
     std::string expected("be c~de f~gie");
-    insertHardspacesAfterOrphans(argument);
+    myOrphan.insertHardspacesAfterOrphans(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(insertHardspacesAfterOrphansTests, canHandleThreeOrphans) {
+TEST_F(insertHardspacesAfterOrphansTests, canHandleThreeOrphans) {
     std::string argument("ha i jot k el m en");
     std::string expected("ha i~jot k~el m~en");
-    insertHardspacesAfterOrphans(argument);
+    myOrphan.insertHardspacesAfterOrphans(argument);
     EXPECT_EQ(expected, argument);
 }
 
-TEST(insertHardspacesAfterSurnamesTests, doNothingWhenNoSpacesPassedIn) {
+struct insertHardspacesAfterSurnamesTests : public removeFrontSpacesTests {};
+TEST_F(insertHardspacesAfterSurnamesTests, doNothingWhenNoSpacesPassedIn) {
     std::string argument("Elephant");
     std::string expected("Elephant");
-    insertHardSpacesAfterSurnames(argument);
+    myOrphan.insertHardSpacesAfterSurnames(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(insertHardspacesAfterSurnamesTests, insertHardSpaceAfterFirstSurname) {
+TEST_F(insertHardspacesAfterSurnamesTests, insertHardSpaceAfterFirstSurname) {
     std::string argument(" Zak J. abc def g ");
     std::string expected(" Zak~J. abc def g ");
-    insertHardSpacesAfterSurnames(argument);
+    myOrphan.insertHardSpacesAfterSurnames(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(insertHardspacesAfterSurnamesTests, insertHardspaceAfterTwoSurnames) {
+TEST_F(insertHardspacesAfterSurnamesTests, insertHardspaceAfterTwoSurnames) {
     std::string argument(" Moniuszko A., Dunaj J. abc def g ");
     std::string expected(" Moniuszko~A., Dunaj~J. abc def g ");
-    insertHardSpacesAfterSurnames(argument);
+    myOrphan.insertHardSpacesAfterSurnames(argument);
     EXPECT_EQ(expected, argument);
 }
-TEST(insertHardspacesAfterSurnamesTests, insertHardspaceAfterThreeSurnames) {
+TEST_F(insertHardspacesAfterSurnamesTests, insertHardspaceAfterThreeSurnames) {
     std::string argument(" Moniuszko A., Dunaj J., Biegus R. abc def g ");
     std::string expected(" Moniuszko~A., Dunaj~J., Biegus~R. abc def g ");
-    insertHardSpacesAfterSurnames(argument);
+    myOrphan.insertHardSpacesAfterSurnames(argument);
     EXPECT_EQ(expected, argument);
 }
